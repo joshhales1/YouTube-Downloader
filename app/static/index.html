@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <script src="client.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <title>YouTube Downloader</title>
+</head>
+<body>
+    <div id="main">
+
+        <video src="" autoplay controls id="video-element"></video>
+        <progress id="progress-bar" value="0" max="100"></progress>
+        <div class="input-container">
+            <input id="url-input" type="text" placeholder="Enter url..." />
+            <button id="url-button">Download</button>
+        </div>
+        <p id="log"></p>
+    </div>
+
+    <div id="search">
+
+        <div class="input-container">
+            <input id="search-input" type="text" placeholder="Enter search term..." />
+            <button id="search-button">Search</button>
+        </div>
+
+
+        <div id="search-output">
+
+
+        </div>
+    </div>
+
+</body>
+</html>
