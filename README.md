@@ -2,7 +2,7 @@
 
 The repository is the source code for the awesomely simple YouTube downloader found at the link below. The goal of the project was to simplify the pain of downloading YouTube videos and provide a tool actually designed for users. No intrusive ads or fake progress bars, just the information and content a user would want and need.
 
-Either check out the implementation here or clone the repo and `npm i`, `npm build` then `npm run`.
+Either check out the implementation here or clone the repo and `npm i`, `npm run-script build` then `npm run`.
 
 ## What it does do
 - Search YouTube for videos
