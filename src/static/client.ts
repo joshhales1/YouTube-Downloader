@@ -3,6 +3,8 @@
 const urlButton: HTMLButtonElement = $("url-button") as HTMLButtonElement;
 const urlBar: HTMLInputElement = $("url-input") as HTMLInputElement;
 
+const previewButton: HTMLButtonElement = $("preview") as HTMLButtonElement;
+
 const searchButton = $("search-button");
 const searchBar: HTMLInputElement = $("search-input") as HTMLInputElement;
 const resultsBox = $('search-output');
@@ -12,11 +14,18 @@ const logElement: HTMLParagraphElement = $('log') as HTMLParagraphElement;
 const progressBar: HTMLProgressElement = $("progress-bar") as HTMLProgressElement;
 const videoElement: HTMLVideoElement = $('video-element') as HTMLVideoElement;
 
+const formatSelector: HTMLSelectElement = $('format') as HTMLSelectElement;
+
 urlButton.onclick = download;
 searchButton.onclick = loadSearchResults;
+previewButton.onclick = preview;
 
-function loadVideo(url: string) {
+function loadVideo(url: string): any {
     urlBar.value = url;
+    videoElement.src = "/stream/?q=" + urlBar.value;
+}
+
+function preview() {
     videoElement.src = "/stream/?q=" + urlBar.value;
 }
 
@@ -45,7 +54,7 @@ async function download() {
     let uid = uuidv4();
 
     link.download = videoDetails.title;
-    link.href = "/file/?q=" + urlBar.value + "&uid=" + uid;
+    link.href = "/file/?q=" + urlBar.value + "&uid=" + uid + "&format=" + formatSelector.value;
     link.click();
 
     while (true) {

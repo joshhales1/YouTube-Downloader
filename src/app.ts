@@ -2,6 +2,7 @@ import * as express from 'express';
 import * as ytdl from 'ytdl-core';
 import * as ytsr from 'ytsr';
 import * as fs from 'fs';
+import * as ffmpeg from 'fluent-ffmpeg';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -63,13 +64,30 @@ app.get('/file', (req, res) => {
 
             let reqID: string = req.query.uid as string;
 
-            let videoInfo = await ytdl.getBasicInfo(url);
-            let videoName = reqID + ".mp4";
-            let videoNamePath = __dirname + "/" + videoName;
+            let videoName = reqID;           
 
             let video = ytdl(url);
 
-            let stream = video.pipe(fs.createWriteStream(videoNamePath));
+            videoName = (req.query.format as string === "mp3") ? video + ".mp3" : video + ".mp4";
+            let videoNamePath = __dirname + "/" + videoName;
+
+            if (req.query.format as string === "mp3") {
+
+                ffmpeg(video)
+                    .audioBitrate(128)
+                    .save(videoNamePath)
+                    .on('end', async () => {
+                        endRequest(reqID, videoNamePath, res);
+                    });
+
+            } else {              
+
+                let stream = video.pipe(fs.createWriteStream(videoNamePath));
+
+                stream.on('close', async () => {
+                    endRequest(reqID, videoNamePath, res);
+                });
+            }
 
             progresses[reqID] = 0;
 
@@ -79,23 +97,7 @@ app.get('/file', (req, res) => {
 
             });
 
-            stream.on('close', async () => {
-
-                await res.sendFile(videoNamePath, (err) => {
-
-                    if (err) {
-                        console.log(err);
-                        res.status(500).end();
-                    }
-                });
-
-                fs.exists(videoNamePath, (exists) => {
-                    if (exists)
-                        fs.unlink(videoNamePath, () => { });
-                });
-
-                delete progresses[reqID];
-            });
+            
         })
 
         .catch((error) => {
@@ -107,6 +109,24 @@ app.get('/file', (req, res) => {
         });
 
 });
+
+async function endRequest(reqID: string, fileName: string, res) {
+
+    await res.sendFile(fileName, (err) => {
+
+        if (err) {
+            console.log(err);
+            res.status(500).end();
+        }
+    });
+
+    fs.exists(fileName, (exists) => {
+        if (exists)
+            fs.unlink(fileName, () => { });
+    });
+
+    delete progresses[reqID];
+}
 
 app.get('/search', (req, res) => {
     if (!(req.query.q as string))
