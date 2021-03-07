@@ -6,7 +6,7 @@ Either check out the implementation here or clone the repo and `npm i`, `npm run
 
 ## What it does do
 - Search YouTube for videos
-- Download searched videos in `mp4` format
+- Download searched videos in `mp4` and `mp3` format
 - Stream the video whilst waiting/to verify it is the correct video
 - View download progress when transferring from YouTube to the server.
 
