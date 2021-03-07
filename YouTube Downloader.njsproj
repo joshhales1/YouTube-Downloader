@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="src\app.ts" />
+    <Content Include=".gitignore" />
     <Content Include="app\static\index.html">
       <SubType>Code</SubType>
     </Content>

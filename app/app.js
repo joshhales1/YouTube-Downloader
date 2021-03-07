@@ -13,6 +13,8 @@ const express = require("express");
 const ytdl = require("ytdl-core");
 const ytsr = require("ytsr");
 const fs = require("fs");
+const console_1 = require("console");
+throw new console_1.exception("hello");
 const app = express();
 const port = process.env.PORT || 3000;
 var progresses = {};

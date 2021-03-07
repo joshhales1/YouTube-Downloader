@@ -22,10 +22,16 @@ function loadVideo(url: string) {
 
 async function download() {
 
+
+    let videoDetails;
+
     urlButton.disabled = true; // Only thing that messes up with multiple downloads is the UI so this isn't critical, therefore can stay on the client.
 
     try {
-        await ajax('/info/?q=' + urlBar.value);
+        videoDetails = await ajax('/info/?q=' + urlBar.value);
+        videoDetails = JSON.parse(JSON.parse(videoDetails)); // No clue why this is needed.
+
+        console.log(videoDetails);
     } catch (e) {
 
         logElement.innerHTML = "Not a valid YouTube URL.";
@@ -38,7 +44,7 @@ async function download() {
     let link = document.createElement("a");
     let uid = uuidv4();
 
-    link.download = name;
+    link.download = videoDetails.title;
     link.href = "/file/?q=" + urlBar.value + "&uid=" + uid;
     link.click();
 
