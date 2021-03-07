@@ -11,7 +11,6 @@ Either check out the implementation here or clone the repo and `npm i`, `npm run
 - View download progress when transferring from YouTube to the server.
 
 ## What it does not do
-- Download in `mp3` (coming very very soon)
 - Store downloads for any time
 - Allow scrubbing/scrolling/skipping in the preview stream
 
