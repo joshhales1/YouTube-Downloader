@@ -30,8 +30,6 @@ function preview() {
 }
 
 async function download() {
-
-
     let videoDetails;
 
     urlButton.disabled = true; // Only thing that messes up with multiple downloads is the UI so this isn't critical, therefore can stay on the client.
@@ -40,7 +38,6 @@ async function download() {
         videoDetails = await ajax('/info/?q=' + urlBar.value);
         videoDetails = JSON.parse(JSON.parse(videoDetails)); // No clue why this is needed.
 
-        console.log(videoDetails);
     } catch (e) {
 
         logElement.innerHTML = "Not a valid YouTube URL.";
@@ -57,7 +54,7 @@ async function download() {
     link.href = "/file/?q=" + urlBar.value + "&uid=" + uid + "&format=" + formatSelector.value;
     link.click();
 
-    while (true) {
+    let interval = setInterval(async () => {
 
         try {
             let progress = JSON.parse(await ajax('progress/?uid=' + uid)).progress;
@@ -65,23 +62,24 @@ async function download() {
             if (progress != undefined) {
                 progressBar.value = parseFloat(progress) * 100;
 
-                console.log(progress);
-
-                if (progress == 1)
-                    break;
             } else {
-                break;
+                cleanUpDownload(interval);
             }
 
         } catch (e) {
 
             console.log(e);
 
-            break;
+            cleanUpDownload(interval);
         }
-    }
 
+    }, 1000);    
+}
+
+function cleanUpDownload(interval) {
+    clearInterval(interval);
     urlButton.disabled = false;
+    progressBar.value = 100;
 }
 
 async function loadSearchResults() {

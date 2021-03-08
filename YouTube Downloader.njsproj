@@ -6,7 +6,7 @@
     <RootNamespace>YouTube Downloader</RootNamespace>
     <SaveNodeJsSettingsInProjectFile>True</SaveNodeJsSettingsInProjectFile>
     <NodejsPort>3000</NodejsPort>
-    <Environment>ID_TOKEN=QUFFLUhqbEp5NTBnUjB1U2RFVTNWOGIzeXpaTlltQlVTUXw\u003</Environment>
+    <Environment>ID_TOKEN=QUFFLUhqbEp5NTBnUjB1U2RFVTNWOGIzeXpaTlltQlVTUXw\u003d</Environment>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
