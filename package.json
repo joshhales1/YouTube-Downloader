@@ -1,11 +1,9 @@
 {
-  "name": "you-tube-downloader",
+  "name": "youtube-downloader",
   "version": "0.0.0",
   "description": "YouTube Downloader",
   "main": "app.js",
-  "author": {
-    "name": ""
-  },
+  "author": "Jay Hales",
   "scripts": {
     "build": "tsc --build",
     "clean": "tsc --build --clean",
@@ -21,5 +19,19 @@
     "fluent-ffmpeg": "^2.1.2",
     "ytdl-core": "^4.5.0",
     "ytsr": "^3.3.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JayHales/YouTube-Downloader.git"
+  },
+  "keywords": [
+    "youtube",
+    "download",
+    "proxy"
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JayHales/YouTube-Downloader/issues"
+  },
+  "homepage": "https://github.com/JayHales/YouTube-Downloader#readme"
 }

@@ -7,6 +7,17 @@ import * as ffmpeg from 'fluent-ffmpeg';
 const app = express();
 const port = process.env.PORT || 3000;
 
+const COOKIE = {
+    requestOptions: {
+        headers: {
+            cookie: 'x-youtube-identity-token=' + process.env.ID_TOKEN + ';'
+        }
+    }
+};
+
+
+console.log(COOKIE.requestOptions.headers.cookie);
+
 var progresses = {};
 
 app.use('/', express.static(__dirname + '/static'));
@@ -15,7 +26,7 @@ app.get('/stream', (req, res) => {
 
     trimRequestParams(req.query.q as string)
         .then((url) => {
-            ytdl(url).pipe(res);
+            ytdl(url, COOKIE).pipe(res);
         })
 
         .catch((error) => {
@@ -29,7 +40,7 @@ app.get('/info', (req, res) => {
 
     trimRequestParams(req.query.q as string)
         .then((url) => {
-            ytdl.getBasicInfo(url).then(result => {
+            ytdl.getBasicInfo(url, COOKIE).then(result => {
                 res.json(JSON.stringify(result.videoDetails));
                 res.end();
             });
@@ -66,7 +77,7 @@ app.get('/file', (req, res) => {
 
             let videoName = reqID;           
 
-            let video = ytdl(url);
+            let video = ytdl(url, COOKIE);
 
             videoName = (req.query.format as string === "mp3") ? video + ".mp3" : video + ".mp4";
             let videoNamePath = __dirname + "/" + videoName;
