@@ -79,7 +79,7 @@ app.get('/file', (req, res) => {
 
             let video = ytdl(url, COOKIE);
 
-            videoName = (req.query.format as string === "mp3") ? video + ".mp3" : video + ".mp4";
+            videoName = (req.query.format as string === "mp3") ? videoName + ".mp3" : videoName + ".mp4";
             let videoNamePath = __dirname + "/" + videoName;
 
             if (req.query.format as string === "mp3") {
