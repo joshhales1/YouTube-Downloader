@@ -10,15 +10,15 @@
     "start": "node app/app.js"
   },
   "devDependencies": {
-    "@types/express": "^4.17.11",
+    "@types/express": "^4.17.12",
     "@types/node": "^8.0.14",
     "typescript": "^3.2.2"
   },
   "dependencies": {
     "express": "^4.17.1",
     "fluent-ffmpeg": "^2.1.2",
-    "ytdl-core": "^4.5.0",
-    "ytsr": "^3.3.1"
+    "ytdl-core": "^4.8.2",
+    "ytsr": "^3.5.0"
   },
   "repository": {
     "type": "git",
