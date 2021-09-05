@@ -84,7 +84,9 @@ function cleanUpDownload(interval) {
 
 async function loadSearchResults() {
     let results = JSON.parse(await ajax('/search/?q=' + searchBar.value)).items;
+    
 
+    console.log(results);
     let resultsHTML = '';
 
     for (let result of results) {
@@ -95,7 +97,6 @@ async function loadSearchResults() {
         <div class="result-text">
           <h1>${result.title}</h1>
           <h2>Uploaded by: ${result.author.name}</h2>
-          <h2>${result.description}</h2>
           <h3>${result.duration}</h3>
         </div>
         <img class='result-img' src="${result.bestThumbnail.url}">
@@ -122,7 +123,14 @@ function ajax(url: string): Promise<string> {
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 resolve(this.responseText);
+                console.log(this.status);
             } else if (this.readyState == 4) {
+
+                console.log(this.status);
+
+                if (this.status == 569)
+                    alert("This video seems to have no audio associated with it. Please try another video. The problem is likely to be specific to that video");
+
                 reject(this.status.toString());
             }
         };

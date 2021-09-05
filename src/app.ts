@@ -5,7 +5,7 @@ import * as fs from 'fs';
 import * as ffmpeg from 'fluent-ffmpeg';
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 const COOKIE = {
     requestOptions: {
@@ -14,9 +14,6 @@ const COOKIE = {
         }
     }
 };
-
-
-console.log(COOKIE.requestOptions.headers.cookie);
 
 var progresses = {};
 
@@ -82,14 +79,30 @@ app.get('/file', (req, res) => {
             videoName = (req.query.format as string === "mp3") ? videoName + ".mp3" : videoName + ".mp4";
             let videoNamePath = __dirname + "/" + videoName;
 
+            console.log(videoNamePath);
+
             if (req.query.format as string === "mp3") {
+
 
                 ffmpeg(video)
                     .audioBitrate(128)
                     .save(videoNamePath)
                     .on('end', async () => {
                         endRequest(reqID, videoNamePath, res);
+                    })
+                    .on('error', async () => {
+
+                        res.status(569).end();
+
+                        fs.exists(videoNamePath, (exists) => {
+                            if (exists)
+                                fs.unlink(videoNamePath, () => { });
+                        });
+
+                        delete progresses[reqID];
+
                     });
+                
 
             } else {              
 
