@@ -1,5 +1,7 @@
 # YouTube Downloader
 
+## NOTE: The dependencies are quite unstable and YouTube keeps changing things. If something is broken let me know so I can fix it. 
+
 The repository is the source code for the awesomely simple YouTube downloader found at the link below. The goal of the project was to simplify the pain of downloading YouTube videos and provide a tool actually designed for users. No intrusive ads or fake progress bars, just the information and content a user would want and need.
 
 Check out a running implementation [here](https://ytdl0.herokuapp.com/).
