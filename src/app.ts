@@ -4,6 +4,11 @@ import * as ytsr from 'ytsr';
 import * as fs from 'fs';
 import * as ffmpeg from 'fluent-ffmpeg';
 
+import * as jog from 'jayh';
+
+
+const secret = fs.readFileSync('../jogger_secret', 'utf-8');
+
 const app = express();
 const port = process.env.PORT || 8084;
 
@@ -28,7 +33,7 @@ app.get('/stream', (req, res) => {
 
         .catch((error) => {
             res.status(404).end();
-
+	    qjog(2, error.toString());
             console.log(error);
         });
 });
@@ -45,7 +50,7 @@ app.get('/info', (req, res) => {
 
         .catch((error) => {
             res.status(404).end();
-
+            qjog(2, error.toString());
             console.log(error);
         });
 
@@ -90,7 +95,7 @@ app.get('/file', (req, res) => {
                     .on('end', async () => {
                         endRequest(reqID, videoNamePath, res);
                     })
-                    .on('error', async () => {
+                    .on('error', async (e) => {
 
                         res.status(569).end();
 
@@ -98,7 +103,7 @@ app.get('/file', (req, res) => {
                             if (exists)
                                 fs.unlink(videoNamePath, () => { });
                         });
-
+			qjog(2, e.toString());
                         delete progresses[reqID];
 
                     });
@@ -127,7 +132,7 @@ app.get('/file', (req, res) => {
         .catch((error) => {
 
             res.status(404).end();
-
+		qjog(2, error.toString());
             console.log(error);
 
         });
@@ -141,6 +146,7 @@ async function endRequest(reqID: string, fileName: string, res) {
         if (err) {
             console.log(err);
             res.status(500).end();
+            qjog(2, err.toString());
         }
     });
 
@@ -158,12 +164,17 @@ app.get('/search', (req, res) => {
 
     ytsr(req.query.q as string, { limit: 20 })
         .then(r => res.send(r)) // Send the search results to client.
-        .catch(e => res.status(404).end()); // If any errors send custom error code to client to handle itself.
+        .catch(e => {res.status(404).end(); qjog(2, e.toString());}) // If any errors send custom error code to client to handle itself.
 });
 
 app.listen(port, () => {
     console.log(`Listening on ${port}...`);
+    qjog(0, "Opening...")
 });
+
+function qjog(severity: number, message: string) {
+	jog('959792991298543656', severity, 'YouTube Downloader', message, secret);
+}
 
 function trimRequestParams(input: string): Promise<string> {
     return new Promise((resolve, reject) => {
