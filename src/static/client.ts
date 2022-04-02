@@ -22,11 +22,11 @@ previewButton.onclick = preview;
 
 function loadVideo(url: string): any {
     urlBar.value = url;
-    videoElement.src = "/stream/?q=" + urlBar.value;
+    videoElement.src = "./stream/?q=" + urlBar.value;
 }
 
 function preview() {
-    videoElement.src = "/stream/?q=" + urlBar.value;
+    videoElement.src = "./stream/?q=" + urlBar.value;
 }
 
 async function download() {
@@ -35,7 +35,7 @@ async function download() {
     urlButton.disabled = true; // Only thing that messes up with multiple downloads is the UI so this isn't critical, therefore can stay on the client.
 
     try {
-        videoDetails = await ajax('/info/?q=' + urlBar.value);
+        videoDetails = await ajax('./info/?q=' + urlBar.value);
         videoDetails = JSON.parse(JSON.parse(videoDetails)); // No clue why this is needed.
 
     } catch (e) {
@@ -51,13 +51,13 @@ async function download() {
     let uid = uuidv4();
 
     link.download = videoDetails.title;
-    link.href = "/file/?q=" + urlBar.value + "&uid=" + uid + "&format=" + formatSelector.value;
+    link.href = "./file/?q=" + urlBar.value + "&uid=" + uid + "&format=" + formatSelector.value;
     link.click();
 
     let interval = setInterval(async () => {
 
         try {
-            let progress = JSON.parse(await ajax('progress/?uid=' + uid)).progress;
+            let progress = JSON.parse(await ajax('./progress/?uid=' + uid)).progress;
 
             if (progress != undefined) {
                 progressBar.value = parseFloat(progress) * 100;
@@ -83,7 +83,7 @@ function cleanUpDownload(interval) {
 }
 
 async function loadSearchResults() {
-    let results = JSON.parse(await ajax('/search/?q=' + searchBar.value)).items;
+    let results = JSON.parse(await ajax('./search/?q=' + searchBar.value)).items;
     
 
     console.log(results);

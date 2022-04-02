@@ -5,7 +5,7 @@ import * as fs from 'fs';
 import * as ffmpeg from 'fluent-ffmpeg';
 
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 8084;
 
 const COOKIE = {
     requestOptions: {
