@@ -4,7 +4,7 @@
 
 The repository is the source code for the awesomely simple YouTube downloader found at the link below. The goal of the project was to simplify the pain of downloading YouTube videos and provide a tool actually designed for users. No intrusive ads or fake progress bars, just the information and content a user would want and need.
 
-Check out a running implementation [here](https://ytdl0.herokuapp.com/).
+Check out a running implementation [here](https://jayhal.es/ytdl/).
 
 Either check out the implementation here or clone the repo and `npm i`, `npm run-script build` then `npm run`.
 
